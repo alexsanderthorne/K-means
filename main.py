@@ -16,7 +16,15 @@ with open('dados.csv') as csvfile:
         tabela.append(row)
 df = DataFrame(tabela, columns=['sexo', 'idade', 'cidadeNatal', 'cidadeReside', 'estadoCivil', 'cor',
 	'meioTransporte', 'transportePublico', 'salario', 'ingles', 'atividadeRemunerada', 'escola', 'curso',
-	'linguagem'])
+	'contatoLinguagem', 'linguagem', 'razao'])
+
+with open('binario.csv') as csvfile:
+    reader2 = csv.reader(csvfile)
+    for row in reader2:
+        tabela.append(row)
+df2 = DataFrame(tabela, columns=['sexo', 'idade', 'cidadeNatal', 'cidadeReside', 'estadoCivil', 'cor',
+	'meioTransporte', 'transportePublico', 'salario', 'ingles', 'atividadeRemunerada', 'escola', 'curso',
+	'contatoLinguagem', 'linguagem', 'razao'])
 
 def calculateAge(birthDate):
     today = date.today()
@@ -33,7 +41,11 @@ def achaTamanho(x):
         print(a)
     return str(maior)
 
-
+def decToBin2(n,campo,i, tamanho):
+	resultadoNormalizado = int(n) #round((n / int(df2[campo].max())) * 100)
+	binario = "{0:b}".format(resultadoNormalizado)
+	binarioformatado = ('{:0>{}}'.format(binario, tamanho))
+	return binarioformatado
 
 def decToBin(n,campo,i, tamanho):
 	resultadoNormalizado = round((n / int(df[campo].max())) * 100)
@@ -68,7 +80,7 @@ def sexoToBin(sexo):
 			sexobin = "{0:b}".format(1)
 	elif sexo == "Feminino":
 			sexobin = "{0:b}".format(2)
-	elif sexo == "Outros":
+	elif sexo == "Outro":
 			sexobin = "{0:b}".format(3)
 	elif sexo == "Não desejo informar":
 			sexobin = "{0:b}".format(4)
@@ -171,13 +183,100 @@ def cursoToBin(curso):
 
 	binarioformatado = str('{:0>4}'.format(cursoBin))
 	return binarioformatado
+linguagemBin = 0
+def liguagemToBin2(linguagem):
+		if linguagem == "Java, Java Script, PORTUGOL":
+				linguagemBin = "{0:b}".format(9)
+		elif linguagem == "Java, Python, C, Ruby":
+				linguagemBin = "{0:b}".format(10)
+		elif linguagem == "Java, C, C++, C#":
+				linguagemBin = "{0:b}".format(11)
+		elif linguagem == "Java, PHP, Java Script, Angular":
+				linguagemBin = "{0:b}".format(12)
+		elif linguagem == "C, C++, C#, Java Script":
+				linguagemBin = "{0:b}".format(13)
+		elif linguagem == "Java, Python, C++, PHP, JSF":
+				linguagemBin = "{0:b}".format(14)
+		elif linguagem == "Java, Python, C, Java Script, Angular, Dart":
+				linguagemBin = "{0:b}".format(15)
+		elif linguagem == "Java, C, C++, Java Script, Angular":
+				linguagemBin = "{0:b}".format(16)
+		elif linguagem == "Java, Python, C, C++, C#, PHP, .NET, Java Script, Dart (Flutter)":
+				linguagemBin = "{0:b}".format(17)
+		return linguagemBin
+		
 
+def liguagemToBin(linguagem):
+	if linguagem == "":
+			linguagemBin = "{0:b}".format(0)
+	elif linguagem == "Java":
+			linguagemBin = "{0:b}".format(1)
+	elif linguagem == "Python":
+			linguagemBin = "{0:b}".format(2)
+	elif linguagem == "C++":
+			linguagemBin = "{0:b}".format(3)
+	elif linguagem == "Visual Basic":
+			linguagemBin = "{0:b}".format(4)
+	elif linguagem == "Python, Java Script":
+			linguagemBin = "{0:b}".format(5)
+	elif linguagem == "Java, Java Script":
+			linguagemBin = "{0:b}".format(6)
+	elif linguagem == "Java, Python, C":
+			linguagemBin = "{0:b}".format(7)
+	elif linguagem == "Python, C, Java Script":
+			linguagemBin = "{0:b}".format(8)
+	else:
+		linguagemBin = liguagemToBin2(linguagem)
+		
+	binarioformatado = str('{:0>5}'.format(linguagemBin))
+	return binarioformatado
+
+def razaoToBin2(razao):
+	if razao == "Mercado aquecido na área de tecnologia (razões financeiras), Afinidade com a área de tecnologia, Possibilidade de abrir minha própria empresa (por exemplo, uma startup)":
+			razaoBin = "{0:b}".format(9)
+	elif razao == "Mercado aquecido na área de tecnologia (razões financeiras), Afinidade com a área de tecnologia, Possibilidade de trabalhar em grandes centros (no Brasil ou no exterior), Possibilidade de abrir minha própria empresa (por exemplo, uma startup)":
+			razaoBin = "{0:b}".format(10)
+	elif razao == "Influência de amigos/familiares, Mercado aquecido na área de tecnologia (razões financeiras), Possibilidade de trabalhar em grandes centros (no Brasil ou no exterior), Possibilidade de abrir minha própria empresa (por exemplo, uma startup)":
+			razaoBin = "{0:b}".format(11)
+	elif razao == "Influência de amigos/familiares, Mercado aquecido na área de tecnologia (razões financeiras), Afinidade com a área de tecnologia, Possibilidade de trabalhar em grandes centros (no Brasil ou no exterior), Possibilidade de abrir minha própria empresa (por exemplo, uma startup)":
+			razaoBin = "{0:b}".format(12)
+	elif razao == "Mercado aquecido na área de tecnologia (razões financeiras), Afinidade com a área de tecnologia, Possibilidade de trabalhar em grandes centros (no Brasil ou no exterior), Possibilidade de abrir minha própria empresa (por exemplo, uma startup)":
+			razaoBin = "{0:b}".format(13)
+	elif razao == "Afinidade com a área de tecnologia, Possibilidade de abrir minha própria empresa (por exemplo, uma startup), Crescer profissionalmente e usar os novos conhecimentos adquiridos no meu local de trabalho.":
+			razaoBin = "{0:b}".format(14)
+	elif razao == "Mercado aquecido na área de tecnologia (razões financeiras)":
+			razaoBin = "{0:b}".format(15)
+	return razaoBin
+
+def razaoToBin(razao):
+	if razao == "Possibilidade de abrir minha própria empresa (por exemplo, uma startup)":
+			razaoBin = "{0:b}".format(1)
+	elif razao == "Afinidade com a área de tecnologia":
+			razaoBin = "{0:b}".format(2)
+	elif razao == "Mercado aquecido na área de tecnologia (razões financeiras)":
+			razaoBin = "{0:b}".format(3)
+	elif razao == "mudanca ou ascensão profissional na empresa em q trabalho":
+			razaoBin = "{0:b}".format(4)
+	elif razao == "Influência de amigos/familiares, Afinidade com a área de tecnologia":
+			razaoBin = "{0:b}".format(5)
+	elif razao == "Afinidade com a área de tecnologia, Possibilidade de abrir minha própria empresa (por exemplo, uma startup)":
+			razaoBin = "{0:b}".format(6)
+	elif razao == "Mercado aquecido na área de tecnologia (razões financeiras), Afinidade com a área de tecnologia":
+			razaoBin = "{0:b}".format(7)
+	elif razao == "Afinidade com a área de tecnologia, Possibilidade de trabalhar em grandes centros (no Brasil ou no exterior), Possibilidade de abrir minha própria empresa (por exemplo, uma startup)":
+			razaoBin = "{0:b}".format(8)
+	else:
+		razaoBin = razaoToBin2(razao)
+	
+	binarioformatado = str('{:0>5}'.format(razaoBin))
+	return binarioformatado
+	
 def normaliza(num, campo):
     num = int(df.iloc[reader.line_num][campo])
     resultado = round((num / int(df[campo].max())) * 100)
     return resultado
 
-n = int(input("Digite uma opção:\n 1-Converter para binario\n 2-teste"))
+n = int(input("Digite uma opção:\n 1-Converter para binario\n 2-Converter idade"))
 	
 if n == 1:
 	for row in reader:
@@ -198,7 +297,9 @@ if n == 1:
 		atividadeRemunerada = row[10]
 		escola = row[11]
 		curso = row[12]
-		linguagem = row[13]
+		contatoLinguagem = row[13]
+		linguagem = row[14]
+		razao = row[15]
 
 		sexoBinario = sexoToBin(sexo)
 		idadeDecimal = anoIdade #decToBin(anoIdade, "idade", 1, 7)
@@ -213,27 +314,41 @@ if n == 1:
 		atividadeRemuneradaBinario = trueOrFalse(atividadeRemunerada)
 		escolaBinario = escolaToBin(escola)
 		cursoBinario = cursoToBin(curso)
-		linguagemBinario = trueOrFalse(linguagem)
+		contatoLinguagemBinario = trueOrFalse(contatoLinguagem)
+		linguagemBinario = liguagemToBin(linguagem)
+		razaoBinario = razaoToBin(razao)
+
 
 		with open('binario.csv', 'a') as bi:
 			writer = csv.writer(bi)
 			writer.writerow([sexoBinario, idadeDecimal, cidadeNatalBinario, cidadeResideBinario,
 			estadoCivilBinario, corBinario, meioTransporteBinario, transportePublicoBinario,
 			salarioBinario, inglesBinario, atividadeRemuneradaBinario, escolaBinario,
-			cursoBinario, linguagemBinario])
-	print("convertido")
+			cursoBinario, contatoLinguagemBinario, linguagemBinario, razaoBinario])
 if n ==2:
-	print("teste")
-		# for row in reader:
-		# 	idade = row[1]
-		# 	ano = parser.parse(idade).year
-		# 	mes = parser.parse(idade).month
-		# 	dia = parser.parse(idade).day
-		# 	anoIdade = calculateAge(date(ano, mes, dia))
-		# 	idadeDecimal2 = 3 #decToBin(anoIdade, "idade", 1, 7)
-		# 	with open('bin.csv', 'a') as bi2:
-		# 		writer2 = csv.writer(bi2)
-		# 		writer2.writerow([sexoBinario, idadeDecimal2, cidadeNatalBinario, cidadeResideBinario,
-		# 		estadoCivilBinario, corBinario, meioTransporteBinario, transportePublicoBinario,
-		# 		salarioBinario, inglesBinario, atividadeRemuneradaBinario, escolaBinario,
-		# 		cursoBinario, linguagemBinario])
+		for row in readerBin:
+			sexo = row[0]
+			idade = row[1]
+			cidadeNatal = row[2]
+			cidadeReside = row[3]
+			estadoCivil = row[4]
+			cor = row[5]
+			meioTransporte = row[6]
+			transportePublico = row[7]
+			salario = row[8]
+			ingles = row[9]
+			atividadeRemunerada = row[10]
+			escola = row[11]
+			curso = row[12]
+			contatoLinguagem = row[13]
+			linguagem = row[14]
+			razao = row[15]
+			
+		
+			idadeDecimal2 = decToBin2(idade, "idade", 1, 7)
+			with open('bin.csv', 'a') as bi2:
+				writer2 = csv.writer(bi2)
+				writer2.writerow([sexo, idadeDecimal2, cidadeNatal, cidadeReside,
+				estadoCivil, cor, meioTransporte, transportePublico,
+				salario, ingles, atividadeRemunerada, escola,
+				curso, contatoLinguagem, linguagem, razao])
